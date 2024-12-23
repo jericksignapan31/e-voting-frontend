@@ -1,0 +1,32 @@
+<mat-sidenav-container class="sidenav-container">
+
+    <mat-sidenav #sidenav mode="side" opened class="sidenav">
+        <mat-nav-list>
+            <!-- <img [src]="logo" alt="login-logo"> -->
+
+            <mat-list-item routerLink="/layout/dashboard" routerLinkActive="active-link">
+                <mat-icon mat-list-icon>dashboard</mat-icon>
+                <span class="d-name" mat-line>Dashboard</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/layout/candidates" routerLinkActive="active-link">
+                <mat-icon mat-list-icon>person</mat-icon>
+                <span mat-line>Candidates</span>
+            </mat-list-item>
+          
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content >
+
+        <mat-toolbar color="primary" class="header" >
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <h4>title</h4>
+        </mat-toolbar>
+
+        <div class="dashboard-container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

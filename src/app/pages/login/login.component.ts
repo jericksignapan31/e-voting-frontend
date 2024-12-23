@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { MatIconModule } from '@angular/material/icon';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from '../../core/dashboard/dashboard.component';
 import { Router } from '@angular/router';
@@ -10,16 +15,19 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   imports: [MatIconModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  logo: string = 'assets/login-logo.png'
+  logo: string = 'assets/login-logo.png';
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+  ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -38,14 +46,14 @@ export class LoginComponent {
         title: 'Form Error',
         text: 'Please fill in all required fields correctly.',
         icon: 'error',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
       });
 
       return;
     }
     console.log('Form Submitted', this.loginForm.value);
     Swal.fire('Logged In', 'Welcome back!', 'success');
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/layout']);
   }
 
   onForgotPassword(): void {
@@ -62,8 +70,7 @@ export class LoginComponent {
         }
         console.log('Reset email sent to:', value);
         return null;
-      }
+      },
     });
   }
-
 }
