@@ -8,9 +8,35 @@
                 <mat-icon mat-list-icon>dashboard</mat-icon>
                 <span class="d-name" mat-line>Dashboard</span>
             </mat-list-item>
+
             <mat-list-item routerLink="/layout/candidates" routerLinkActive="active-link">
                 <mat-icon mat-list-icon>person</mat-icon>
                 <span mat-line>Candidates</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/layout/position" routerLinkActive="active-link">
+                <mat-icon mat-list-icon>person</mat-icon>
+                <span mat-line>Position</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/layout/ballots" routerLinkActive="active-link">
+                <mat-icon mat-list-icon>person</mat-icon>
+                <span mat-line>Ballots</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/layout/announcements" routerLinkActive="active-link">
+                <mat-icon mat-list-icon>person</mat-icon>
+                <span mat-line>Announcement</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/layout/ballotsReport" routerLinkActive="active-link">
+                <mat-icon mat-list-icon>person</mat-icon>
+                <span mat-line>Ballots Report</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/layout/students" routerLinkActive="active-link">
+                <mat-icon mat-list-icon>person</mat-icon>
+                <span mat-line>students</span>
             </mat-list-item>
           
         </mat-nav-list>
@@ -22,7 +48,38 @@
             <button mat-icon-button (click)="sidenav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <h4>title</h4>
+            <h4 class="greeting">GoodDay! <span>Welcome back James!</span></h4>
+
+            <div class="profile-container">
+                <button mat-icon-button class="notification-button">
+                  <mat-icon>notifications</mat-icon>
+                </button>
+
+                <img
+                src="https://randomuser.me/api/portraits/men/1.jpg"
+                alt="User Avatar"
+                class="profile-avatar"
+              />
+              
+                <button mat-button class="profile-button" [matMenuTriggerFor]="menu">
+                
+                  <div class="profile-info">
+                    <span class="profile-name">Jone Mearchil</span>
+                    <span class="profile-email">jonemearchilhotmail.com</span>
+                  </div>
+                </button>
+              
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <mat-icon>settings</mat-icon>
+                    <span>Settings</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>logout</mat-icon>
+                    <span>Logout</span>
+                  </button>
+                </mat-menu>
+              </div>
         </mat-toolbar>
 
         <div class="dashboard-container">
