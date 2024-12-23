@@ -28,7 +28,6 @@ form.sign-in-form {
     display: flex;
     align-items: center;
     border: 2px solid #ddd;
-    /* Default border */
 }
 
 .input-field input {

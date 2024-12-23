@@ -7,35 +7,31 @@
             <div class="panel right-panel">
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="sign-in-form">
                     <h2 class="title">LOGIN</h2>
-                    <div class="input-field"
-                         [ngClass]="{
-                             'input-error': username!.invalid && username!.touched,
-                             'input-valid': username!.valid && username!.dirty
-                         }">
+                    <div class="input-field" [ngClass]="{
+                  'input-error': username!.invalid && username!.touched,
+                  'input-valid': username!.valid && username!.dirty
+              }">
                         <i class="las la-user" style="font-size: 2em"></i>
                         <input type="text" placeholder="Username" formControlName="username" />
                     </div>
                     <div *ngIf="username!.invalid && username!.touched" class="error-message">
                         Username is required.
                     </div>
-
-                    <div class="input-field"
-                         [ngClass]="{
-                             'input-error': password!.invalid && password!.touched,
-                             'input-valid': password!.valid && password!.dirty
-                         }">
+                    <div class="input-field" [ngClass]="{
+                  'input-error': password!.invalid && password!.touched,
+                  'input-valid': password!.valid && password!.dirty
+              }">
                         <i class="las la-lock" style="font-size: 2em"></i>
                         <input type="password" placeholder="Password" formControlName="password" />
                     </div>
                     <div *ngIf="password!.invalid && password!.touched" class="error-message">
                         Password is required.
                     </div>
-
                     <div class="forgot-password">
                         <a (click)="onForgotPassword()">Forgot Password?</a>
                     </div>
-                    <button type="submit" class="btn solid" [disabled]="loginForm.invalid">
-                        <span>Login</span>
+                    <button (click)="onSubmit()" type="submit" class="btn solid" [disabled]="loginForm.invalid">
+                        <span routerLinkActive="router-link-active">Login</span>
                     </button>
                 </form>
             </div>
