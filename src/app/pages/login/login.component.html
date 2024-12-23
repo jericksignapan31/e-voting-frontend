@@ -1,28 +1,44 @@
 <div class="container-1">
     <div>
-        <img src="assets/login-logo.png" alt="login-logo">
+        <img [src]="logo" alt="login-logo">
     </div>
     <div>
         <div class="container">
             <div class="panel right-panel">
-                <form action="" class="sign-in-form">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="sign-in-form">
                     <h2 class="title">LOGIN</h2>
-                    <div class="input-field">
+                    <div class="input-field"
+                         [ngClass]="{
+                             'input-error': username!.invalid && username!.touched,
+                             'input-valid': username!.valid && username!.dirty
+                         }">
                         <i class="las la-user" style="font-size: 2em"></i>
                         <input type="text" placeholder="Username" formControlName="username" />
                     </div>
-                    <div class="input-field">
-                        <i class="las la-lock" style="font-size: 2em"></i>
-
-                        <input type="password" placeholder="Password" formControlName="password" />
+                    <div *ngIf="username!.invalid && username!.touched" class="error-message">
+                        Username is required.
                     </div>
 
-                    <button type="submit" class="btn solid">
+                    <div class="input-field"
+                         [ngClass]="{
+                             'input-error': password!.invalid && password!.touched,
+                             'input-valid': password!.valid && password!.dirty
+                         }">
+                        <i class="las la-lock" style="font-size: 2em"></i>
+                        <input type="password" placeholder="Password" formControlName="password" />
+                    </div>
+                    <div *ngIf="password!.invalid && password!.touched" class="error-message">
+                        Password is required.
+                    </div>
 
+                    <div class="forgot-password">
+                        <a (click)="onForgotPassword()">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn solid" [disabled]="loginForm.invalid">
                         <span>Login</span>
                     </button>
-
                 </form>
             </div>
         </div>
     </div>
+</div>
