@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     MatFormFieldModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './students.component.html',
   styleUrl: './students.component.css',
@@ -43,7 +43,7 @@ export class StudentsComponent {
       mInitial: 'A',
       suffix: 'Jr',
       yearLevel: '9',
-      actions: '',
+      actions: 'Edit',
     },
     {
       username: '2021404305',
@@ -52,16 +52,15 @@ export class StudentsComponent {
       mInitial: 'V',
       suffix: 'II',
       yearLevel: '8',
-      actions: '',
+      actions: 'Edit',
     },
   ];
 
-  displayedColumns: string[] = Object.keys(this.students[0]);
+  displayedColumns: string[] = ['username', 'firstName', 'lastName', 'mInitial', 'suffix', 'yearLevel', 'actions'];
   constructor(private authService: UserService) {}
 
   onSearch(): void {
     console.log('Search query:', this.searchQuery);
-    // Add your filtering logic here
   }
 
   ngOnInit(): void {
@@ -77,5 +76,16 @@ export class StudentsComponent {
         console.error('Failed to load users:', error);
       },
     );
+  }
+
+
+  editStudent(student: IStudentTable): void {
+    console.log('Edit student:', student);
+    // Add edit logic here
+  }
+
+  deleteStudent(student: IStudentTable): void {
+    console.log('Delete student:', student);
+    // Add delete logic here
   }
 }
