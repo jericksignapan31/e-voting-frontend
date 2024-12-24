@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import Swal from 'sweetalert2';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -10,11 +10,14 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { Subscription, catchError, throwError } from 'rxjs';
+import { AlertServiceService } from '../../services/alert-service.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
-  imports: [MatIconModule, ReactiveFormsModule, CommonModule,HttpClientModule],
+  imports: [MatIconModule, ReactiveFormsModule, CommonModule,HttpClientModule,MatProgressSpinnerModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -25,12 +28,15 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private _Auth: AuthService 
+    private _auth: AuthService,
+    private _alert: AlertServiceService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    sessionStorage.clear();
   }
 
   get username() {
@@ -41,30 +47,53 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  onSubmit(): void {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      Swal.fire({
-        title: 'Form Error',
-        text: 'Please fill in all required fields correctly.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
-      return;
-    }
+  loginSubscription: Subscription = new Subscription();
+  isLoadingButton = signal<boolean>(false);
+  result: any;
 
-    // Call the LoginService to authenticate the user
-    const { username, password } = this.loginForm.value;
-    this._Auth.login(username, password).subscribe(
-      (response) => {
-        // Handle successful login response
-        Swal.fire('Logged In', 'Welcome back!', 'success');
-        this.router.navigate(['/layout']); // Redirect to dashboard or layout
-      },
-      (error) => {
-        // Handle error
-        Swal.fire('Login Failed', 'Invalid username or password.', 'error');
-      }
+  login() {
+    this.isLoadingButton.set(true);
+
+    this.loginSubscription.add(
+      this._auth
+        .login(this.loginForm.value.username, this.loginForm.value.password)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            if (error.status === 401) {
+              this._alert.alertWithTimer(
+                'error',
+                'Invalid Credentials',
+                'Invalid Credentials'
+              );
+              this.isLoadingButton.set(false);
+            } 
+            return throwError(error);
+          })
+        )
+
+        .subscribe((response) => {
+         
+          if(this._auth.userInfo?.archived === true){
+    this._alert.handleError('Inactive Account Please Report to Admin')
+    this.loginForm.reset()
+     this.isLoadingButton.set(false);
+
+    return
+  } 
+  
+  else {
+      this._alert.alertWithTimer(
+              'success',
+              'Success',
+              'Login Successful'
+            );
+            setTimeout(() => {
+              this.router.navigate(['\layout']);
+            this.isLoadingButton.set(false);
+            }, 2000);
+          }
+  }
+         )
     );
   }
 

@@ -1,0 +1,105 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: var(--primary-color);
+  padding: 0.5rem 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.custom_input {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds spacing between button and input */
+}
+
+.addBtn {
+  box-shadow: 0px 1px 0px 0px #fff6af;
+  background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+  background-color: #ffec64;
+  border-radius: 6px;
+  border: 1px solid #ffaa22;
+  display: inline-block;
+  cursor: pointer;
+  color: #333333;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 0px 0px #ffee66;
+}
+
+.addBtn:hover {
+  background: linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+  background-color: #ffab23;
+}
+
+.addBtn:active {
+  position: relative;
+  top: 1px;
+}
+
+.custom_input {
+  display: flex;
+  align-items: center;
+  position: relative;
+  max-width: 100%;
+}
+
+.input {
+  font-size: 12px;
+  padding: 5px 9px;
+  width: 100%;
+  padding-left: 35px;
+  outline: none;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #c4d1eb;
+  border-radius: 4px;
+  box-shadow: 3px 3px 2px 0px #e2e2e2;
+  transition: 0.3s ease;
+}
+
+.input:focus {
+  background: #f2f2f2;
+  border: 1px solid #5a7ec7;
+  border-radius: 10px;
+}
+
+.input::placeholder {
+  color: #dddddd;
+}
+
+.svg_icon {
+  position: absolute;
+  left: 10px;
+  fill: #4660dc;
+  width: 12px;
+  height: 12px;
+}
+
+th,
+td {
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+button {
+  min-width: 80px;
+}

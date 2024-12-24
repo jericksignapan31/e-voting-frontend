@@ -76,6 +76,10 @@ form.sign-in-form {
     margin: 10px 0;
     text-transform: uppercase;
     cursor: pointer;
+
+    mat-spinner{
+        margin-left: 4.5rem;
+      }
 }
 
 form {

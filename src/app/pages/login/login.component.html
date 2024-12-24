@@ -5,7 +5,7 @@
     <div>
         <div class="container">
             <div class="panel right-panel">
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="sign-in-form">
+                <form [formGroup]="loginForm" class="sign-in-form">
                     <h2 class="title">LOGIN</h2>
                     <div class="input-field" [ngClass]="{
                   'input-error': username!.invalid && username!.touched,
@@ -30,8 +30,13 @@
                     <div class="forgot-password">
                         <a (click)="onForgotPassword()">Forgot Password?</a>
                     </div>
-                    <button (click)="onSubmit()" type="submit" class="btn solid" [disabled]="loginForm.invalid">
-                        <span routerLinkActive="router-link-active">Login</span>
+                    <button (click)="login()" type="submit" class="btn solid" [disabled]="loginForm.invalid">
+                        <mat-spinner
+                        *ngIf="isLoadingButton()"
+                        diameter="20"
+                        strokeWidth="4" />
+                      
+                      <span *ngIf="!isLoadingButton()">Login</span>
                     </button>
                 </form>
             </div>
