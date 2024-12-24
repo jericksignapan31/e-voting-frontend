@@ -8,12 +8,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from '../../core/dashboard/dashboard.component';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
-  imports: [MatIconModule, ReactiveFormsModule, CommonModule],
+  imports: [MatIconModule, ReactiveFormsModule, CommonModule,HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -24,6 +25,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private _Auth: AuthService 
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -48,13 +50,24 @@ export class LoginComponent {
         icon: 'error',
         confirmButtonText: 'OK',
       });
-
       return;
     }
-    console.log('Form Submitted', this.loginForm.value);
-    Swal.fire('Logged In', 'Welcome back!', 'success');
-    this.router.navigate(['/layout']);
+
+    // Call the LoginService to authenticate the user
+    const { username, password } = this.loginForm.value;
+    this._Auth.login(username, password).subscribe(
+      (response) => {
+        // Handle successful login response
+        Swal.fire('Logged In', 'Welcome back!', 'success');
+        this.router.navigate(['/layout']); // Redirect to dashboard or layout
+      },
+      (error) => {
+        // Handle error
+        Swal.fire('Login Failed', 'Invalid username or password.', 'error');
+      }
+    );
   }
+
 
   onForgotPassword(): void {
     Swal.fire({
