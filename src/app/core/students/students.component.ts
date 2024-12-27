@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-students',
@@ -90,7 +91,40 @@ export class StudentsComponent {
   }
 
   deleteStudent(student: IStudentTable): void {
-    console.log('Delete student:', student);
-    // Implement delete logic here
+    this.sharedService.setStudent(student);
+    console.log(student, 'delete');
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You are about to archived ${student.firstName} ${student.lastName}. This action cannot be undone.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.deleteUser(student.user_id).subscribe({
+          next: (response) => {
+            Swal.fire(
+              'Deleted!',
+              `${student.firstName} ${student.lastName} has been archived.`,
+              'success'
+            );
+
+            this.students = this.students.filter(s => s.user_id !== student.user_id);
+          },
+          error: (err) => {
+            console.error('Error archived student:', err);
+            Swal.fire(
+              'Error!',
+              'Failed to delete the student. Please try again later.',
+              'error'
+            );
+          },
+        });
+      }
+    });
   }
 }

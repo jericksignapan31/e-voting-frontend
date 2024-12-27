@@ -90,7 +90,6 @@ export class AddStudentsComponent implements OnInit {
         this.router.navigate(['/layout/students']);
       },
       error: (error) => {
-        console.error('Error adding student:', error);
         Swal.fire({
           icon: 'error',
           title: 'Error',
