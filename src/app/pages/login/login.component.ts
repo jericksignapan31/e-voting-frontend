@@ -17,7 +17,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
-  imports: [MatIconModule, ReactiveFormsModule, CommonModule,HttpClientModule,MatProgressSpinnerModule],
+  imports: [
+    MatIconModule,
+    ReactiveFormsModule,
+    CommonModule,
+    HttpClientModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -29,10 +35,10 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private _auth: AuthService,
-    private _alert: AlertServiceService
+    private _alert: AlertServiceService,
   ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
 
@@ -63,40 +69,35 @@ export class LoginComponent {
               this._alert.alertWithTimer(
                 'error',
                 'Invalid Credentials',
-                'Invalid Credentials'
+                'Invalid Credentials',
               );
               this.isLoadingButton.set(false);
-            } 
+            }
             return throwError(error);
-          })
+          }),
         )
 
         .subscribe((response) => {
-         
-          if(this._auth.userInfo?.archived === true){
-    this._alert.handleError('Inactive Account Please Report to Admin')
-    this.loginForm.reset()
-     this.isLoadingButton.set(false);
+          if (this._auth.userInfo?.archived === true) {
+            this._alert.handleError('Inactive Account Please Report to Admin');
+            this.loginForm.reset();
+            this.isLoadingButton.set(false);
 
-    return
-  } 
-  
-  else {
-      this._alert.alertWithTimer(
+            return;
+          } else {
+            this._alert.alertWithTimer(
               'success',
               'Success',
-              'Login Successful'
+              'Login Successful',
             );
             setTimeout(() => {
               this.router.navigate(['\layout']);
-            this.isLoadingButton.set(false);
+              this.isLoadingButton.set(false);
             }, 2000);
           }
-  }
-         )
+        }),
     );
   }
-
 
   onForgotPassword(): void {
     Swal.fire({

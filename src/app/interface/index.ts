@@ -7,3 +7,9 @@ export interface IStudentTable {
   yearLevel: string;
   actions: string;
 }
+
+export interface IRoleId {
+  roleID: number;
+  roleName: string;
+}
+

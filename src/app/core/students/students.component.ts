@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-students',
@@ -19,49 +20,25 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatIconModule,
     FormsModule,
+    RouterModule,
   ],
   templateUrl: './students.component.html',
   styleUrl: './students.component.css',
 })
 export class StudentsComponent {
-  users: any[] = [];
   searchQuery: string = '';
-  students: IStudentTable[] = [
-    {
-      username: '2021404303',
-      firstName: 'John',
-      lastName: 'Dela Cruz',
-      mInitial: 'N',
-      suffix: 'N/A',
-      yearLevel: '7',
-      actions: 'Edit',
-    },
-    {
-      username: '2021404304',
-      firstName: 'Mark',
-      lastName: 'Ruffalo',
-      mInitial: 'A',
-      suffix: 'Jr',
-      yearLevel: '9',
-      actions: 'Edit',
-    },
-    {
-      username: '2021404305',
-      firstName: 'Tony',
-      lastName: 'Stank',
-      mInitial: 'V',
-      suffix: 'II',
-      yearLevel: '8',
-      actions: 'Edit',
-    },
+  students: IStudentTable[] = [];
+  displayedColumns: string[] = [
+    'username',
+    'firstName',
+    'lastName',
+    'mInitial',
+    'suffix',
+    'yearLevel',
   ];
+  
 
-  displayedColumns: string[] = ['username', 'firstName', 'lastName', 'mInitial', 'suffix', 'yearLevel', 'actions'];
   constructor(private authService: UserService) {}
-
-  onSearch(): void {
-    console.log('Search query:', this.searchQuery);
-  }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -69,23 +46,45 @@ export class StudentsComponent {
 
   loadUsers(): void {
     this.authService.getUsers().subscribe(
-      (data) => {
-        this.users = data;
+      (data: any[]) => {
+        // Map API data to match IStudentTable interface
+        this.students = data.map((user) => ({
+          username: user.username,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          mInitial: user.middle_initial || '',
+          suffix: user.suffix || 'N/A',
+          yearLevel: user.year_level || 'N/A',
+          actions: '', // Initialize the 'actions' field if needed
+        }));
       },
       (error) => {
         console.error('Failed to load users:', error);
-      },
+      }
     );
   }
 
+  onSearch(): void {
+    // Filter students based on search query
+    if (this.searchQuery) {
+      this.students = this.students.filter((student) =>
+        Object.values(student)
+          .join(' ')
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase())
+      );
+    } else {
+      this.loadUsers(); // Reset to original data if query is empty
+    }
+  }
 
   editStudent(student: IStudentTable): void {
     console.log('Edit student:', student);
-    // Add edit logic here
+    // Implement edit logic here
   }
 
   deleteStudent(student: IStudentTable): void {
     console.log('Delete student:', student);
-    // Add delete logic here
+    // Implement delete logic here
   }
 }

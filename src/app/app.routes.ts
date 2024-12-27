@@ -8,6 +8,7 @@ import { BallotsComponent } from './core/ballots/ballots.component';
 import { AnnouncementsComponent } from './core/announcements/announcements.component';
 import { BallotsReportComponent } from './core/ballots/ballots-report/ballots-report.component';
 import { StudentsComponent } from './core/students/students.component';
+import { AddStudentsComponent } from './core/students/add-students/add-students.component';
 
 export const routes: Routes = [
   {
@@ -64,6 +65,11 @@ export const routes: Routes = [
         path: 'students',
         component: StudentsComponent,
         title: 'Students',
+      },
+      {
+        path: 'addstudent',
+        component: AddStudentsComponent,
+        title: 'Add Student',
       },
     ],
   },

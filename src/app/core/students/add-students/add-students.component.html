@@ -1,0 +1,103 @@
+<div class="mat-elevation-z2 student-container">
+    <h2 class="header">
+      Add Student Account
+    </h2>
+  
+    <form class="student-form" [formGroup]="studentForm">
+      <!-- Row 1 -->
+      <div  fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start start" class="form-row">
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>Firstname</mat-label>
+          <input matInput type="text" formControlName="first_name" />
+          <mat-error *ngIf="studentForm.get('first_name')?.invalid && studentForm.get('first_name')?.touched">
+            Firstname is required.
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>Lastname</mat-label>
+          <input matInput type="text" formControlName="last_name" />
+          <mat-error *ngIf="studentForm.get('last_name')?.invalid && studentForm.get('last_name')?.touched">
+            Lastname is required.
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>M. Initial</mat-label>
+          <input matInput type="text" formControlName="middle_initial" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>password</mat-label>
+          <input matInput type="text" formControlName="password" />
+        </mat-form-field>
+      </div>
+      
+  
+      <!-- Row 2 -->
+      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start start" class="form-row">
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>Suffix</mat-label>
+           <input matInput type="text" formControlName="suffix" />
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>Year Level</mat-label>
+          <input matInput type="number" formControlName="year_level" />
+        <mat-error *ngIf="studentForm.get('year_level')?.invalid && studentForm.get('year_level')?.touched">
+          Year Level is required.
+        </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>Contact Number</mat-label>
+          <input matInput type="tel" formControlName="contact_number" />
+          <mat-error
+            *ngIf="
+              studentForm.get('contact_number')?.invalid &&
+              studentForm.get('contact_number')?.touched
+            "
+          >
+            Contact Number is required and must be valid.
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Row 3 -->
+      <div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start start" class="form-row">
+        <mat-form-field appearance="fill" fxFlex="50%">
+          <mat-label>Email (Optional)</mat-label>
+          <input matInput type="email" formControlName="email" />
+          <mat-error *ngIf="studentForm.get('email')?.invalid && studentForm.get('email')?.touched">
+            Enter a valid email address.
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>Sex</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+          <mat-error *ngIf="studentForm.get('status')?.invalid && studentForm.get('status')?.touched">
+            Sex is required.
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" fxFlex="30%">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username" />
+          <mat-error *ngIf="studentForm.get('username')?.invalid && studentForm.get('username')?.touched">
+            Username is required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Button Row -->
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" class="button-row">
+        <button class="clsdBtn">Close</button>
+        <button class="submitBtn" (click)="onSubmit()" [disabled]="studentForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+  
