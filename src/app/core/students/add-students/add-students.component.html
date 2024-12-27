@@ -36,12 +36,12 @@
   
       <!-- Row 2 -->
       <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start start" class="form-row">
-        <mat-form-field appearance="fill" fxFlex="30%">
+        <mat-form-field appearance="fill" fxFlex="50%">
           <mat-label>Suffix</mat-label>
            <input matInput type="text" formControlName="suffix" />
         </mat-form-field>
   
-        <mat-form-field appearance="fill" fxFlex="30%">
+        <mat-form-field appearance="fill" fxFlex="50%">
           <mat-label>Year Level</mat-label>
           <input matInput type="number" formControlName="year_level" />
         <mat-error *ngIf="studentForm.get('year_level')?.invalid && studentForm.get('year_level')?.touched">
@@ -61,10 +61,7 @@
             Contact Number is required and must be valid.
           </mat-error>
         </mat-form-field>
-      </div>
-  
-      <!-- Row 3 -->
-      <div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start start" class="form-row">
+
         <mat-form-field appearance="fill" fxFlex="50%">
           <mat-label>Email (Optional)</mat-label>
           <input matInput type="email" formControlName="email" />
@@ -72,8 +69,12 @@
             Enter a valid email address.
           </mat-error>
         </mat-form-field>
+      </div>
   
-        <mat-form-field appearance="fill" fxFlex="30%">
+      <!-- Row 3 -->
+      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start start" class="form-row-3">
+  
+        <mat-form-field appearance="fill" fxFlex="50%">
           <mat-label>Sex</mat-label>
           <mat-select formControlName="status">
             <mat-option value="male">Male</mat-option>
@@ -83,14 +84,15 @@
             Sex is required.
           </mat-error>
         </mat-form-field>
-        
-        <mat-form-field appearance="fill" fxFlex="30%">
+      
+        <mat-form-field appearance="fill" fxFlex="50%">
           <mat-label>Username</mat-label>
           <input matInput type="text" formControlName="username" />
           <mat-error *ngIf="studentForm.get('username')?.invalid && studentForm.get('username')?.touched">
             Username is required.
           </mat-error>
         </mat-form-field>
+      
       </div>
   
       <!-- Button Row -->
