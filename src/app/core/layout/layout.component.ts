@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -9,6 +9,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { UserModel } from '../../interface/UserModel';
 
 @Component({
   selector: 'app-layout',
@@ -22,18 +24,29 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     MatListModule,
     RouterModule,
-
     MatMenuModule,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
   logo: string = 'assets/login-logo.png';
+  user: UserModel | null = null;
 
   tiles = [
     { title: 'Total Users', content: '1,250', icon: 'people' },
     { title: 'New Orders', content: '45', icon: 'shopping_cart' },
     { title: 'Revenue', content: '$23,400', icon: 'attach_money' },
   ];
+
+  constructor(private _auth: AuthService) {}
+
+  ngOnInit() {
+    this.user = this._auth.userInfo;
+    console.log('User info in profile:', this.user);
+  }
+
+  logout() {
+    this._auth.logout();
+  }
 }

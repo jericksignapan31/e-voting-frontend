@@ -22,18 +22,18 @@ export class AuthService {
   }
 
   constructor(
-    private http: HttpClient,
     private _login: LoginService,
     private _alert: AlertServiceService,
     private router: Router,
   ) {
     this._isLoggedIn$.next(!!this.token);
     this.userInfo = this.getUser(this.token);
+    this.user.set(this.userInfo);
   }
 
-  hasRole(role: string): boolean {
-    return this.userInfo?.userType === role;
-  }
+  // hasRole(role: string): boolean {
+  //   return this.userInfo?.userType === role;
+  // }
 
   userInfoIdDecoded = signal<number>(0);
   login(username: any, password: any) {
@@ -54,7 +54,6 @@ export class AuthService {
 
   public getUser(token: string): UserModel | null {
     if (!token) {
-      this.router.navigate(['']);
       return null;
     }
     return JSON.parse(atob(token.split('.')[1])) as UserModel;
@@ -66,27 +65,20 @@ export class AuthService {
 
   private readonly TOKEN_NAME = environment.tokenName;
   logout() {
-    this._alert.simpleAlert(
-      'warning',
-      'Warning',
-      'Are you sure you want to logout?',
-      () => {
-        this._isLoggedIn$.next(false);
-        localStorage.removeItem(this.TOKEN_NAME);
-        this.router.navigate([''])
-        window.location.reload();
-      }
-    )
+    this._alert.simpleAlert('warning', 'Logout', 'Logging out', () => {
+      localStorage.removeItem(environment.tokenName);
+      this._isLoggedIn$.next(false);
+      this.router.navigate(['/login']);
+    });
   }
 
-  public isloggedin() {
-    return localStorage.getItem(environment.tokenName) != null;
+  isLoggedIn() {
+    return !!this.token;
   }
 
- public getrole() {
-    return sessionStorage.getItem('role') != null
-      ? sessionStorage.getItem('role')?.toString()
-      : '';
-  
-}
+  // public getrole() {
+  //   return sessionStorage.getItem('role') != null
+  //     ? sessionStorage.getItem('role')?.toString()
+  //     : '';
+  // }
 }

@@ -58,45 +58,23 @@ export class LoginComponent {
   result: any;
 
   login() {
+    if (this.loginForm.invalid) {
+      Swal.fire('Error', 'Please fill in all fields correctly.', 'error');
+      return;
+    }
+
     this.isLoadingButton.set(true);
-
-    this.loginSubscription.add(
-      this._auth
-        .login(this.loginForm.value.username, this.loginForm.value.password)
-        .pipe(
-          catchError((error: HttpErrorResponse) => {
-            if (error.status === 401) {
-              this._alert.alertWithTimer(
-                'error',
-                'Invalid Credentials',
-                'Invalid Credentials',
-              );
-              this.isLoadingButton.set(false);
-            }
-            return throwError(error);
-          }),
-        )
-
-        .subscribe((response) => {
-          if (this._auth.userInfo?.archived === true) {
-            this._alert.handleError('Inactive Account Please Report to Admin');
-            this.loginForm.reset();
-            this.isLoadingButton.set(false);
-
-            return;
-          } else {
-            this._alert.alertWithTimer(
-              'success',
-              'Success',
-              'Login Successful',
-            );
-            setTimeout(() => {
-              this.router.navigate(['\layout']);
-              this.isLoadingButton.set(false);
-            }, 2000);
-          }
-        }),
-    );
+    this._auth.login(this.loginForm.value.username, this.loginForm.value.password).subscribe({
+      next: () => {
+        Swal.fire('Success', 'Login successful!', 'success');
+        this.router.navigate(['/layout']);
+        this.isLoadingButton.set(false);
+      },
+      error: (err) => {
+        Swal.fire('Error', 'Invalid credentials.', 'error');
+        this.isLoadingButton.set(false);
+      },
+    });
   }
 
   onForgotPassword(): void {

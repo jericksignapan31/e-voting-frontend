@@ -1,9 +1,7 @@
 export interface UserModel {
     id: string;
     name: string;
-    userType: string;
+    user_role_id: number;
     password:string;
-    isPasswordChanged:boolean
-    archived:boolean
   }
   

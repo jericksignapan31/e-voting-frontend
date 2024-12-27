@@ -36,7 +36,6 @@ export class StudentsComponent {
     'suffix',
     'yearLevel',
   ];
-  
 
   constructor(private authService: UserService) {}
 
@@ -47,34 +46,34 @@ export class StudentsComponent {
   loadUsers(): void {
     this.authService.getUsers().subscribe(
       (data: any[]) => {
-        // Map API data to match IStudentTable interface
         this.students = data.map((user) => ({
+          user_id: user.user_id,
           username: user.username,
           firstName: user.first_name,
           lastName: user.last_name,
           mInitial: user.middle_initial || '',
           suffix: user.suffix || 'N/A',
           yearLevel: user.year_level || 'N/A',
-          actions: '', // Initialize the 'actions' field if needed
+          qr_code:user.qr_code,
+          actions: '',
         }));
       },
       (error) => {
         console.error('Failed to load users:', error);
-      }
+      },
     );
   }
 
   onSearch(): void {
-    // Filter students based on search query
     if (this.searchQuery) {
       this.students = this.students.filter((student) =>
         Object.values(student)
           .join(' ')
           .toLowerCase()
-          .includes(this.searchQuery.toLowerCase())
+          .includes(this.searchQuery.toLowerCase()),
       );
     } else {
-      this.loadUsers(); // Reset to original data if query is empty
+      this.loadUsers();
     }
   }
 

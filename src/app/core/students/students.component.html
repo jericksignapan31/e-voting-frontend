@@ -24,7 +24,6 @@
   class="mat-elevation-z8"
   style="width: 100%;"
 >
-  <!-- Dynamically create table columns -->
   <ng-container *ngFor="let column of displayedColumns">
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column | titlecase }}</th>
@@ -32,7 +31,6 @@
     </ng-container>
   </ng-container>
 
-  <!-- Actions Column -->
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let student">
@@ -41,7 +39,6 @@
     </td>
   </ng-container>
 
-  <!-- Header and row declarations -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns.concat(['actions'])"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns.concat(['actions'])"></tr>
 </table>
