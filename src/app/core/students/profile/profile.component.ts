@@ -11,6 +11,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../../../services/user.service';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -29,10 +32,14 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class ProfileComponent {
   profileForm!: FormGroup;
   profilePic: File | null = null;
+  student: any;
 
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private sharedService: SharedService,
   ) {}
 
   ngOnInit(): void {
@@ -47,13 +54,15 @@ export class ProfileComponent {
       sex: ['', Validators.required],
       username: ['', Validators.required],
     });
+
+    this.student = this.sharedService.getStudent();
+    console.log(this.student, 'student');
   }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.profilePic = file;
-      // Handle file upload to storage (e.g., Firebase or your server) here
       this.snackBar.open('Profile picture selected!', 'Close', {
         duration: 2000,
       });
@@ -63,7 +72,6 @@ export class ProfileComponent {
   onSubmit(): void {
     if (this.profileForm.valid) {
       const profileData = this.profileForm.value;
-      // Submit form data to the backend here
       this.snackBar.open('Profile updated successfully!', 'Close', {
         duration: 2000,
       });

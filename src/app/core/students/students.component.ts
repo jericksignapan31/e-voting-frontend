@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-students',
@@ -37,7 +38,10 @@ export class StudentsComponent {
     'yearLevel',
   ];
 
-  constructor(private authService: UserService,    private router: Router,
+  constructor(
+    private authService: UserService,
+    private router: Router,
+    private sharedService: SharedService,
   ) {}
 
   ngOnInit(): void {
@@ -53,9 +57,11 @@ export class StudentsComponent {
           firstName: user.first_name,
           lastName: user.last_name,
           mInitial: user.middle_initial || '',
+          email: user.email,
+          contact_number: user.contact_number,
           suffix: user.suffix || 'N/A',
           yearLevel: user.year_level || 'N/A',
-          qr_code:user.qr_code,
+          qr_code: user.qr_code,
           actions: '',
         }));
       },
@@ -79,10 +85,8 @@ export class StudentsComponent {
   }
 
   editStudent(student: IStudentTable): void {
-    console.log('Edit student:', student);
+    this.sharedService.setStudent(student);
     this.router.navigate(['/layout/profile']);
-
-    
   }
 
   deleteStudent(student: IStudentTable): void {

@@ -10,27 +10,26 @@
         alt="Avatar"
         class="avatar"
       />
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/241/241528.png"
-        alt="Avatar"
-        class="qrcode"
-      />
+     
+
+      <img     class="qrcode" [src]="'data:image/png;base64,' + student?.qr_code" alt="QR Code" />
+
     </div>
 
     <div class="name">
       <mat-form-field class="example-full-width">
         <mat-label>First Name</mat-label>
-        <input matInput placeholder="Ex. Pizza" value="Sushi" />
+        <input matInput  [value]="student?.firstName" />
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Midle Initial</mat-label>
-        <input matInput placeholder="Ex. Pizza" value="Sushi" />
+        <input matInput  [value]="student?.mInitial" />
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Ex. Pizza" value="Sushi" />
+        <input matInput  [value]="student?.lastName" />
       </mat-form-field>
     </div>
 
@@ -44,29 +43,25 @@
       <mat-card-content>Information</mat-card-content>
 
       <div class="information">
-        <mat-form-field class="example-full-width">
-          <mat-label>Sex</mat-label>
-          <input matInput placeholder="Ex. Pizza" value="Sushi" />
-        </mat-form-field>
-
+   
         <mat-form-field class="example-full-width">
           <mat-label>Suffix</mat-label>
-          <input matInput placeholder="Ex. Pizza" value="Sushi" />
+          <input matInput  [value]="student?.suffix" />
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Year Level</mat-label>
-          <input matInput placeholder="Ex. Pizza" value="Sushi" />
+          <input matInput placeholder="Ex. Pizza" [value]="student?.yearLevel" />
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Contact No.</mat-label>
-          <input matInput placeholder="Ex. Pizza" value="Sushi" />
+          <input matInput placeholder="Ex. Pizza"[value]="student?.contact_number" />
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Email</mat-label>
-          <input matInput placeholder="Ex. Pizza" value="Sushi" />
+          <input matInput placeholder="Ex. Pizza" [value]="student?.email" />
         </mat-form-field>
       </div>
     </mat-card>

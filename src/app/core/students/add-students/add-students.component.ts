@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { UserService } from '../../../services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-students',
@@ -36,6 +37,7 @@ export class AddStudentsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private studentsService: UserService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +86,8 @@ export class AddStudentsComponent implements OnInit {
           text: 'Student has been added successfully!',
         });
         this.studentForm.reset();
-        this.studentForm.get('status')?.setValue('male');
+        this.studentForm.get('status')?.setValue('active');
+        this.router.navigate(['/layout/students']);
       },
       error: (error) => {
         console.error('Error adding student:', error);
