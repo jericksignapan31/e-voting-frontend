@@ -9,6 +9,7 @@ import { AnnouncementsComponent } from './core/announcements/announcements.compo
 import { BallotsReportComponent } from './core/ballots/ballots-report/ballots-report.component';
 import { StudentsComponent } from './core/students/students.component';
 import { AddStudentsComponent } from './core/students/add-students/add-students.component';
+import { ProfileComponent } from './core/students/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -70,6 +71,11 @@ export const routes: Routes = [
         path: 'addstudent',
         component: AddStudentsComponent,
         title: 'Add Student',
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        title: 'Profile',
       },
     ],
   },

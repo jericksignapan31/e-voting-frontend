@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-students',
@@ -37,7 +37,8 @@ export class StudentsComponent {
     'yearLevel',
   ];
 
-  constructor(private authService: UserService) {}
+  constructor(private authService: UserService,    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -79,7 +80,9 @@ export class StudentsComponent {
 
   editStudent(student: IStudentTable): void {
     console.log('Edit student:', student);
-    // Implement edit logic here
+    this.router.navigate(['/layout/profile']);
+
+    
   }
 
   deleteStudent(student: IStudentTable): void {
