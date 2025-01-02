@@ -24,6 +24,9 @@ table {
   gap: 10px; /* Adds spacing between button and input */
 }
 
+mat-icon {
+  width: 5%;
+}
 .addBtn {
   box-shadow: 0px 1px 0px 0px #fff6af;
   background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
@@ -131,7 +134,6 @@ th {
 button {
   min-width: 80px;
 }
-
 
 .editBtn {
   box-shadow: inset 0px 1px 0px 0px #caefab;
